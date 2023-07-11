@@ -84,7 +84,7 @@ AI-GENERATED IMAGE
 This will produce ai-based image according to your query
 
 
-To deploy this kind of bot, Use the GitHub Repository below\n\nhttps://github.com/Fortunatusmokaya/DREADED-GPT-AI\n\nWant your own bot of this kind? Contact and message the numbers below:\n\nwa.me/+254114018035\n\nwa.me/+97693127111\n\nThank You 🤖`)
+To deploy this kind of bot, Use the GitHub Repository below\n\nhttps://github.com/Jerezzayigs/JR-AI\n\nAI-3000JR🤖`)
           break;
         case "g": case "openai": 
           try {
