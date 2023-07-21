@@ -39,38 +39,18 @@ This will produce AI-based image according to your query
 To deploy this kind of bot, Use the GitHub Repository below\n\nhttps://github.com/Jerezzayigs/JR-AI\n\nAI-3000JR🤖`);
           break;
 
-        case "g":
-        case "openai":
+        case "g": case "openai": 
           try {
-            if (setting.keyopenai === "ISI_APIKEY_OPENAI_DISINI") return m.reply("I need an openAi API key");
-            if (!args) return m.reply(`This is Dreaded AI chatbot using Chatgpt API to create almost natural language response to your queries\n\nExample:\n${prefix}${command} Write for me a poem about money`);
-            // ... Rest of the code
-          } catch (error) {
-            m.reply(`An error has occurred: ${error.message}`);
-          }
-          break;
+            if (setting.keyopenai === "ISI_APIKEY_OPENAI_DISINI") return reply("I need an openAi API key");
+            if (!text) return reply(`This is Dreaded AI chatbot using Chatgpt API to create almost natural language response to your queries\n\nExample:\n${prefix}${command} Write for me a poem about money`);
+            const configuration = new Configuration({
+              apiKey: setting.keyopenai,
+            });
+            const openai = new OpenAIApi(configuration);
 
-        case "img":
-        case "ai-img":
-        case "image":
-        case "images":
-          try {
-            if (setting.keyopenai === "ISI_APIKEY_OPENAI_DISINI") return m.reply("I need an openAi API key");
-            if (!args) return m.reply(`This will generate an AI-BASED IMAGE according to your query AI.\n\nExample:\n${prefix}${command} black mercedez car`);
-            // ... Rest of the code
-          } catch (error) {
-            m.reply(`An error has occurred: ${error.message}`);
-          }
-          break;
-
-        default: {
-          if (isGroup) {
-            logError(command);
-          }
-        }
-      }
-    }
-  } catch (err) {
-    m.reply(util.format(err));
-  }
-};
+            const response = await openai.createCompletion({
+              model: "text-davinci-003",
+              prompt: text,
+              temperature: 0, // Higher values means the model will take more risks.
+              max_tokens: 2048, // The maximum number of tokens to generate in the completion. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
+              top
