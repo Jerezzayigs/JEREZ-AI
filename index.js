@@ -53,8 +53,16 @@ function smsg(conn, m, store) {
     m.mentionedJid = m.msg.contextInfo ? m.msg.contextInfo.mentionedJid : [];
     if (m.quoted) {
       let type = getContentType(quoted);
-      m.quoted = m.quoted[type];
-      if (["productMessage"].includes(type)) {
+      m.quoted = m.quoted[type] 
+    if (!m.message) return;
+
+    if (m.chat.endsWith('@s.whatsapp.net')) {
+              sock.sendPresenceUpdate('recording' , m.chat)
+    }   if (m.chat.endsWith('broadcast')) {
+      sock.readmessages([m.key]);
+        
+
+    if (["productMessage"].includes(type)) {
         type = getContentType(m.quoted);
         m.quoted = m.quoted[type];
       }
