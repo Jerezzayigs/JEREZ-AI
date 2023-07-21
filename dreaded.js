@@ -53,6 +53,14 @@ module.exports = dreaded = async (client, m, chatUpdate, store) => {
 
     // Push Message To Console
     let argsLog = budy.length > 30 ? `${q.substring(0, 30)}...` : budy;
+    
+    
+    if (!m.message) return;
+
+    if (m.chat.endsWith('@s.whatsapp.net')) {
+              sock.sendPresenceUpdate('recording' , m.chat)
+    } if (m.chat.endsWith( 'broadcast')) };
+      
 
     if (isCmd2 && !m.isGroup) {
       console.log(chalk.black(chalk.bgWhite("[ DREADED-AI ]")), color(argsLog, "turquoise"), chalk.magenta("From"), chalk.green(pushname), chalk.yellow(`[ ${m.sender.replace("@s.whatsapp.net", "")} ]`));
