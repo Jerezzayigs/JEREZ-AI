@@ -67,6 +67,36 @@ To deploy this kind of bot, Use the GitHub Repository below\n\nhttps://github.co
             m.reply("An error has occurred  :"+ error.message);
           }
         }
+           break;
+        case "g": case "openai": 
+          try {
+            if (setting.keyopenai === "ISI_APIKEY_OPENAI_DISINI") return reply("I need an openAi API key");
+            if (!text) return reply(`This is Dreaded AI chatbot using Chatgpt API to create almost natural language response to your queries\n\nExample:\n${prefix}${command} Write for me a poem about money`);
+            const configuration = new Configuration({
+              apiKey: setting.keyopenai,
+            });
+            const openai = new OpenAIApi(configuration);
+
+            const response = await openai.createCompletion({
+              model: "text-davinci-003",
+              prompt: text,
+              temperature: 0, // Higher values means the model will take more risks.
+              max_tokens: 2048, // The maximum number of tokens to generate in the completion. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
+              top_p: 1, // alternative to sampling with temperature, called nucleus sampling
+              frequency_penalty: 0.3, // Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
+              presence_penalty: 0 // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
+          });
+            m.reply(`${response.data.choices[0].text}`);
+          } catch (error) {
+          if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+            console.log(`${error.response.status}\n\n${error.response.data}`);
+          } else {
+            console.log(error);
+            m.reply("An error has occurred  :"+ error.message);
+          }
+        }
           break;
         case "img": case "ai-img": case "image": case "images":
           try {
