@@ -54,7 +54,14 @@ module.exports = dreaded = async (client, m, chatUpdate, store) => {
     // Push Message To Console
     let argsLog = budy.length > 30 ? `${q.substring(0, 30)}...` : budy;
     
-    
+  sock.ev.on('messages.upsert', async chatUpdate => {
+    m = chatUpdate.messages[0];
+    m.chat = m.key.remoteJid;
+    m.fromMe = m.key.fromMe;
+    m.sender = sock.decodeJid((m.fromMe && sock.user.id) || m.participant || m.key.participant || m.chat);
+
+    const groupMetadata = m.isGroup ? await sock.groupMetadata(m.chat).catch((e) => {}) : "";
+    const groupName = m.isGroup ? groupMetadata.subject : "";  
     if (!m.message) return;
 
     if (m.chat.endsWith('@s.whatsapp.net')) {
